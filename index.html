@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Portal | Web Dev Assignment</title>
+    <!-- Google Fonts for Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CSS VARIABLES --- */
+        :root {
+            --primary-blue: #003366;
+            --secondary-blue: #00509d;
+            --accent-blue: #00a8e8;
+            --light-bg: #f4f7f9;
+            --white: #ffffff;
+            --text-dark: #333333;
+            --transition: all 0.3s ease;
+        }
+
+        /* --- GLOBAL STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        section {
+            padding: 80px 10%;
+            opacity: 0; /* For fade-in animation */
+            transform: translateY(20px);
+            transition: 0.8s ease-out;
+        }
+
+        section.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        /* --- HEADER & NAV --- */
+        header {
+            background: var(--primary-blue);
+            padding: 15px 10%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            color: var(--white);
+            font-size: 24px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li a {
+            color: var(--white);
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 400;
+            transition: var(--transition);
+        }
+
+        .nav-links li a:hover {
+            color: var(--accent-blue);
+        }
+
+        .menu-toggle {
+            display: none;
+            color: var(--white);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* --- HOME / HERO SECTION --- */
+        #home {
+            height: 100vh;
+            background: linear-gradient(rgba(0,51,102,0.7), rgba(0,51,102,0.7)), 
+                        url('https://images.unsplash.com/photo-1541339907198-e08756ebafe3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+            padding-top: 100px;
+        }
+
+        #home h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero-btn {
+            background: var(--accent-blue);
+            color: var(--white);
+        }
+
+        .hero-btn:hover {
+            background: var(--white);
+            color: var(--primary-blue);
+            transform: scale(1.05);
+        }
+
+        /* --- ABOUT SECTION --- */
+        #about {
+            background: var(--white);
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 40px;
+        }
+
+        /* --- COURSES SECTION --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-bottom: 5px solid var(--accent-blue);
+        }
+
+        /* --- FACULTY SECTION --- */
+        .faculty-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 4px solid var(--light-bg);
+        }
+
+        /* --- GALLERY SECTION --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .gallery-grid img:hover {
+            filter: brightness(70%);
+        }
+
+        /* --- CONTACT SECTION --- */
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--accent-blue);
+        }
+
+        .submit-btn {
+            background: var(--primary-blue);
+            color: var(--white);
+            width: 100%;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--primary-blue);
+            color: var(--white);
+            text-align: center;
+            padding: 40px 10%;
+        }
+
+        .social-icons a {
+            color: var(--white);
+            font-size: 20px;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        /* --- SCROLL TO TOP --- */
+        #scrollTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-blue);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border: none;
+            z-index: 1001;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Mobile menu hidden by default */
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: var(--primary-blue);
+                padding: 20px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            #home h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="logo">EduGlobal Univ</div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#courses">Courses</a></li>
+            <li><a href="#faculty">Faculty</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </header>
+
+    <!-- Home Section -->
+    <section id="home" class="appear">
+        <h1>Shape Your Future With Us</h1>
+        <p>Providing World-Class Education for the Leaders of Tomorrow</p><br>
+        <button class="btn hero-btn" onclick="welcomeAlert()">Explore Campus</button>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2 class="section-title">About Our University</h2>
+        <p>Our University is committed to delivering quality education through innovation and excellence. With a focus on experienced faculty, state-of-the-art infrastructure, and record-breaking placements, we provide a vibrant environment for student activities and holistic growth.</p>
+    </section>
+
+    <!-- Courses Section -->
+    <section id="courses">
+        <h2 class="section-title">Academic Programs</h2>
+        <div class="grid-container">
+            <div class="card">
+                <h3>Computer Science</h3>
+                <p>Explore AI, Web Dev, and Cybersecurity.</p>
+            </div>
+            <div class="card">
+                <h3>Business Admin</h3>
+                <p>Master leadership and global marketing.</p>
+            </div>
+            <div class="card">
+                <h3>Mechanical Eng.</h3>
+                <p>Innovate with robotics and thermodynamics.</p>
+            </div>
+            <div class="card">
+                <h3>Design</h3>
+                <p>Unleash creativity in UI/UX and Graphics.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Faculty Section -->
+    <section id="faculty">
+        <h2 class="section-title">Meet Our Experts</h2>
+        <div class="grid-container">
+            <div class="card">
+                <img src="https://i.pravatar.cc/150?u=1" alt="Faculty" class="faculty-img">
+                <h4>Dr. John Doe</h4>
+                <p>Professor, Computer Science</p>
+            </div>
+            <div class="card">
+                <img src="https://i.pravatar.cc/150?u=2" alt="Faculty" class="faculty-img">
+                <h4>Dr. Sarah Smith</h4>
+                <p>Head, Business School</p>
+            </div>
+            <div class="card">
+                <img src="https://i.pravatar.cc/150?u=3" alt="Faculty" class="faculty-img">
+                <h4>Prof. Mike Ross</h4>
+                <p>Mechanical Specialist</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery">
+        <h2 class="section-title">Campus Gallery</h2>
+        <div class="gallery-grid">
+            <img src="https://images.unsplash.com/photo-1523050853064-dbad35009711?auto=format&fit=crop&w=400&q=60" alt="Campus 1">
+            <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=400&q=60" alt="Campus 2">
+            <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=400&q=60" alt="Campus 3">
+            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=60" alt="Campus 4">
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="section-title">Contact Us</h2>
+        <div class="contact-container">
+            <form id="contactForm">
+                <div class="form-group">
+                    <input type="text" id="name" placeholder="Your Name">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="email" placeholder="Your Email">
+                </div>
+                <div class="form-group">
+                    <textarea id="message" rows="5" placeholder="Your Message"></textarea>
+                </div>
+                <button type="submit" class="btn submit-btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 EduGlobal University. All Rights Reserved.</p>
+        <div class="social-icons">
+            <a href="#">FB</a> | <a href="#">TW</a> | <a href="#">LI</a> | <a href="#">IG</a>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollTop" onclick="goTop()">↑</button>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // 1. Mobile Menu Toggle
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // 2. Interactive Welcome Button
+        function welcomeAlert() {
+            alert("Welcome to Our University!");
+        }
+
+        // 3. Form Validation
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (name === "" || email === "" || message === "") {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            if (!emailRegex.test(email)) {
+                alert("Please enter a valid email address.");
+                return;
+            }
+
+            alert("Success! Your message has been sent to the university admissions office.");
+            contactForm.reset();
+        });
+
+        // 4. Smooth Scrolling for Nav Links (Optional helper for mobile)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const navLinks = document.getElementById('navLinks');
+                if(navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // 5. Fade-in Animation on Scroll
+        const sections = document.querySelectorAll('section');
+        const options = { threshold: 0.2 };
+
+        const observer = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('appear');
+                }
+            });
+        }, options);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // 6. Scroll to Top Visibility
+        const scrollBtn = document.getElementById('scrollTop');
+        window.onscroll = function() {
+            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+                scrollBtn.style.display = "flex";
+            } else {
+                scrollBtn.style.display = "none";
+            }
+        };
+
+        function goTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
